@@ -1,7 +1,7 @@
 # Zavrzlama — frontend
 
 Frontend univerzitetskog projekta Zavrzlama, platforme za dnevne logičke igre.
-Trenutno sadrži osnovnu React aplikaciju sa TypeScript-om i Vite-om.
+Trenutno sadrži osnovnu React aplikaciju sa TypeScript-om, Vite-om i Tailwind CSS-om.
 
 ## Preduslovi
 
@@ -26,6 +26,27 @@ Server se zaustavlja sa `Ctrl+C`.
 
 `npm ci` instalira zavisnosti prema verzijama iz `package-lock.json`.
 Taj fajl se čuva u Git-u da bi instalacije bile ponovljive.
+
+## Stilizovanje sa Tailwind CSS-om
+
+Tailwind CSS je povezan kroz dodatak `@tailwindcss/vite` u `vite.config.ts`.
+Fajl `src/index.css` učitava Tailwind naredbom `@import "tailwindcss"`.
+Koristimo Tailwind 4, pa za ovo osnovno podešavanje nisu potrebni
+`tailwind.config.js` ni zasebna PostCSS konfiguracija.
+
+Tailwind klase se navode u React atributu `className`. Na primer, u `App.tsx`:
+
+- `text-4xl` određuje veličinu naslova, a `font-bold` debljinu slova.
+- `text-violet-700` daje naslovu ljubičastu boju.
+- `px-6` i `py-12` dodaju unutrašnji razmak horizontalno i vertikalno.
+- `max-w-5xl` ograničava širinu sadržaja, a `mx-auto` centrira taj blok.
+
+Za proveru pokreni `npm.cmd run dev`. Očekuj veliki, podebljan ljubičasti
+naslov „Zavrzlama“, siv opis i svetlu pozadinu. Suzi prozor pregledača;
+sadržaj treba da ostane čitljiv bez horizontalnog skrolovanja pri širini od
+najmanje 320 piksela.
+
+Zvanično uputstvo: https://tailwindcss.com/docs/installation/using-vite
 
 ## Provere i build
 
