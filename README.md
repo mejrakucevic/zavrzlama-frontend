@@ -25,6 +25,8 @@ Server se zaustavlja sa Ctrl+C. Na drugim sistemima koristi `npm` umesto
 ```text
 src/
   components/layout/MainLayout.tsx # Zajedničko zaglavlje, navigacija i Outlet
+  components/games/GameCard.tsx    # Kartica jedne planirane igre
+  data/games.ts                   # Tip Game i podaci o igrama
   pages/HomePage.tsx               # Početna stranica
   pages/GamesPage.tsx              # Osnovna stranica za igre
   pages/NotFoundPage.tsx           # Nepostojeća adresa
@@ -52,7 +54,7 @@ Koristimo paket `react-router` u deklarativnom režimu.
 | Adresa | Sadržaj |
 | --- | --- |
 | / | Početna stranica sa linkom „Pogledaj igre” |
-| /igre | Najava budućih igara |
+| /igre | Pregled pet planiranih igara sa oznakom „U pripremi” |
 | Ostale adrese | Poruka „Stranica nije pronađena” i povratak na početnu |
 
 Pri kasnijem objavljivanju, hosting treba podesiti da nepoznate putanje
@@ -102,7 +104,25 @@ Pokreni `npm.cmd run dev` i otvori adresu iz terminala.
 5. Proveri dugmad Nazad/Napred u pregledaču i navigaciju pomoću Tab i Enter.
 6. Suzi prozor na 320 piksela: nema horizontalnog skrolovanja.
 
-## Git
+## Pregled igara
+
+`src/data/games.ts` definiše tip `Game` i niz sa pet planiranih igara.
+Svaka ima stabilan `id`, naziv i opis. Nazivi su za sada opisni.
+`GameCard` dobija jednu igru kroz tipizirani prop `game`.
+`GamesPage` koristi `map` da za svaki element niza prikaže karticu.
+`key={game.id}` pomaže React-u da prepozna svaku stavku liste pri promenama.
+
+Kartice su informativne i imaju oznaku „U pripremi”.
+Mreža ima jednu kolonu na uskom ekranu, dve od Tailwind `sm` granice
+(640 px) i tri od `lg` granice (1024 px), pri podrazumevanoj veličini fonta.
+
+Za proveru otvori `/igre`: očekuj tačno pet kartica, sa nazivom, opisom
+i oznakom „U pripremi”. Proveri širine 320, 768 i 1280 piksela:
+očekuj jednu, dve i tri kolone, bez horizontalnog skrolovanja.
+Proveri da navigacija do početne stranice i nazad i dalje radi.
+Pre commit-a pokreni `npm.cmd run lint` i `npm.cmd run build`.
+
+## Git pravila
 
 node_modules, dist, .env i .env.* se ignorišu u Git-u.
 Dozvoljen je .env.example, isključivo sa primerima bez tajnih vrednosti.
