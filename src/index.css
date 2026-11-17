@@ -50,6 +50,28 @@
 .main-nav a { padding: 12px 0 8px; border-bottom: 3px solid transparent; font-size: 14px; font-weight: bold; }
 .main-nav a:hover { color: #99412e; }
 .main-nav a[aria-current="page"] { border-bottom-color: var(--color-coral); }
+.main-nav .nav-cta { padding: 8px 14px; border: 1px solid var(--color-ink); background: var(--color-mustard); }
+.main-nav .nav-cta:hover { background: #f3d57e; color: var(--color-ink); }
+.nav-user { display: inline-flex; align-items: center; gap: 16px; font-size: 14px; }
+.nav-username { font-weight: bold; color: #515247; }
+.nav-button { padding: 0; border: 0; background: none; font-size: 14px; font-weight: bold; text-decoration: underline; text-underline-offset: 5px; }
+.nav-button:hover { color: #99412e; }
+@media (max-width: 640px) {
+  .header-inner { flex-wrap: wrap; justify-content: center; padding-block: 16px; }
+  .main-nav { flex-wrap: wrap; justify-content: center; gap: 18px; }
+}
+.auth-page { max-width: 440px; margin-inline: auto; padding-top: 56px; }
+.auth-page h1 { margin: 16px 0 32px; font: 500 clamp(36px, 5vw, 52px)/1.05 var(--font-display); letter-spacing: -2px; }
+.auth-page h1 em { color: #ad432f; font-weight: normal; }
+.auth-form { display: grid; gap: 20px; }
+.auth-form label { display: grid; gap: 8px; font-size: 13px; font-weight: bold; }
+.auth-form input { width: 100%; padding: 12px 14px; border: 1px solid var(--color-ink); background: #fffaf0; font: inherit; font-weight: normal; font-size: 16px; }
+.auth-form input:focus { outline: 3px solid var(--color-cobalt); outline-offset: 2px; }
+.auth-form small { font-weight: normal; color: #626256; }
+.auth-form .retro-button { justify-self: start; }
+.auth-form .retro-button:disabled { opacity: 0.6; cursor: wait; }
+.form-error { margin: 0; padding: 10px 14px; border-left: 4px solid var(--color-coral); background: #fbe4dd; font-size: 14px; }
+.auth-switch { margin-top: 28px; font-size: 14px; }
 .main-content { padding-bottom: 64px; min-height: 65vh; }
 .eyebrow { font: bold 10px/1.7 monospace; letter-spacing: 0.13em; text-transform: uppercase; }
 .hero {

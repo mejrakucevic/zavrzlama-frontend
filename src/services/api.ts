@@ -14,6 +14,48 @@ export async function checkServerHealth(signal: AbortSignal): Promise<void> {
   }
 }
 
+// ----- Nalozi (autentifikacija) -----
+// Token je u httpOnly kolačiću: pregledač ga sam šalje, mi ga nikad ne diramo.
+
+export interface User {
+  id: string
+  username: string
+  email: string
+  role: 'user' | 'admin'
+  createdAt: string
+}
+
+export interface RegisterData {
+  username: string
+  email: string
+  password: string
+}
+
+export async function registerUser(input: RegisterData): Promise<User> {
+  const { data } = await api.post<{ user: User }>('/auth/register', input)
+  return data.user
+}
+
+export async function loginUser(email: string, password: string): Promise<User> {
+  const { data } = await api.post<{ user: User }>('/auth/login', { email, password })
+  return data.user
+}
+
+export async function logoutUser(): Promise<void> {
+  await api.post('/auth/logout')
+}
+
+// Vrati prijavljenog korisnika, ili null ako niko nije prijavljen
+export async function getCurrentUser(): Promise<User | null> {
+  try {
+    const { data } = await api.get<{ user: User }>('/auth/me')
+    return data.user
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) return null
+    throw error
+  }
+}
+
 // ----- Igra "Pogodi reč" -----
 
 export interface WordGameToday {

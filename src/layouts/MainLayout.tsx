@@ -1,6 +1,9 @@
 import { Link, NavLink, Outlet } from 'react-router'
+import { useAuth } from '../hooks/useAuth'
 
 function MainLayout() {
+  const { user, isLoading, logout } = useAuth()
+
   return (
     <>
       <a href="#main-content" className="skip-link">Preskoči na sadržaj</a>
@@ -18,6 +21,21 @@ function MainLayout() {
             <NavLink to="/games">
               Igre
             </NavLink>
+
+            {/* Dok proveravamo prijavu ne prikazujemo ništa, da dugmad ne "trepnu" */}
+            {!isLoading && (user ? (
+              <span className="nav-user">
+                <span className="nav-username">@{user.username}</span>
+                <button type="button" className="nav-button" onClick={() => void logout()}>
+                  Odjava
+                </button>
+              </span>
+            ) : (
+              <>
+                <NavLink to="/prijava">Prijava</NavLink>
+                <NavLink to="/registracija" className="nav-cta">Registracija</NavLink>
+              </>
+            ))}
           </nav>
         </div>
       </header>
