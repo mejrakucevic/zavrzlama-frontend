@@ -159,6 +159,10 @@
 .word-game-play { display: grid; justify-items: center; gap: 20px; }
 .word-game-status { min-height: 1.6em; font-weight: bold; }
 .word-game-status p { margin: 0; }
+.word-game-status .word-game-next { margin-top: 6px; font-weight: normal; color: #626256; }
+.login-prompt { max-width: 440px; margin: 8px auto 0; padding: 28px; border: 1px solid var(--color-ink); background: #fffaf0; box-shadow: 6px 6px 0 var(--color-mustard); line-height: 1.7; }
+.login-prompt p { margin: 0 0 20px; }
+.login-prompt-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 24px; }
 .word-keyboard { display: grid; gap: 6px; width: min(100%, 520px); }
 .word-keyboard-row { display: flex; justify-content: center; gap: 5px; }
 .word-key {

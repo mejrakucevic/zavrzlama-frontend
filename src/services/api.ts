@@ -58,16 +58,19 @@ export async function getCurrentUser(): Promise<User | null> {
 
 // ----- Igra "Pogodi reč" -----
 
-export interface WordGameToday {
-  date: string // npr. "2026-11-17"
-  wordLength: number
-  maxAttempts: number
+// Stanje današnje partije, onako kako ga čuva server
+export interface WordGameState {
+  guesses: { word: string; statuses: LetterStatus[] }[]
+  status: 'playing' | 'won' | 'lost'
+  score: number
+  answer?: string // server ga šalje samo kad je igra gotova
 }
 
-export interface GuessResponse {
-  statuses: LetterStatus[]
-  isCorrect: boolean
-  answer?: string // server ga šalje samo kad je igra gotova
+export interface WordGameToday {
+  date: string // npr. "2026-11-18"
+  wordLength: number
+  maxAttempts: number
+  game: WordGameState
 }
 
 export async function getWordGameToday(signal?: AbortSignal): Promise<WordGameToday> {
@@ -75,9 +78,10 @@ export async function getWordGameToday(signal?: AbortSignal): Promise<WordGameTo
   return data
 }
 
-export async function submitWordGuess(guess: string, attempt: number): Promise<GuessResponse> {
-  const { data } = await api.post<GuessResponse>('/games/word/guess', { guess, attempt })
-  return data
+// Server sam broji pokušaje, pa šaljemo samo reč
+export async function submitWordGuess(guess: string): Promise<WordGameState> {
+  const { data } = await api.post<{ game: WordGameState }>('/games/word/guess', { guess })
+  return data.game
 }
 
 // Izvuci poruku o grešci koju je poslao server (npr. "Ova reč nije u rečniku.")

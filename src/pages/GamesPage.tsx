@@ -8,7 +8,7 @@ function GamesPage() {
         <p className="eyebrow">KOLEKCIJA / {games.length} IGRE</p>
         <h1 id="games-title">Pronađi svoju<br /><em>zavrzlamu.</em></h1>
         <p>Sastavi najdužu reč, pronađi skrivenu državu ili pogodi reč na srpskom. Tri igre za dobru malu pauzu.</p>
-        <p className="availability-note">Sve igre su u pripremi — ovde možeš da upoznaš ono što dolazi.</p>
+        <p className="availability-note">Pogodi reč možeš da igraš već danas. Ostale igre su u pripremi.</p>
       </section>
       <GameGrid games={games} />
     </>

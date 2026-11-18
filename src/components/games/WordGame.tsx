@@ -1,38 +1,30 @@
 import { useEffect, useEffectEvent, useState } from 'react'
-import { getErrorMessage, getWordGameToday, submitWordGuess } from '../../services/api'
+import { getErrorMessage, getWordGameToday, submitWordGuess, type WordGameState } from '../../services/api'
 import WordBoard from './WordBoard'
 import WordKeyboard from './WordKeyboard'
-import { getKeyStatuses, MAX_ATTEMPTS, SERBIAN_LETTER, WORD_LENGTH, type GuessResult } from './wordLogic'
-import { loadWordGame, saveWordGame } from './wordStorage'
+import { getKeyStatuses, SERBIAN_LETTER, WORD_LENGTH } from './wordLogic'
 
 type LoadState = 'loading' | 'ready' | 'error'
 
-// "Mozak" igre: stanje i pravila. Tajnu reč zna samo server.
+// "Mozak" igre. Pravila i tajnu reč zna server; ovde je samo unos i prikaz.
+// Komponenta se prikazuje samo prijavljenom korisniku (vidi WordGamePage).
 function WordGame() {
   const [loadState, setLoadState] = useState<LoadState>('loading')
   const [loadAttempt, setLoadAttempt] = useState(0)
-  const [date, setDate] = useState('')
-  const [guesses, setGuesses] = useState<GuessResult[]>([])
-  const [answer, setAnswer] = useState<string>()
+  const [game, setGame] = useState<WordGameState>({ guesses: [], status: 'playing', score: 0 })
   const [currentGuess, setCurrentGuess] = useState('')
   const [message, setMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  // Izvedene vrednosti
-  const isWon = guesses.some((guess) => guess.statuses.every((status) => status === 'correct'))
-  const isLost = !isWon && guesses.length === MAX_ATTEMPTS
-  const isGameOver = isWon || isLost
+  const isGameOver = game.status !== 'playing'
 
-  // 1. Kad se igra prikaže: pitaj server koji je danas dan, pa učitaj sačuvan napredak
+  // 1. Učitaj današnju partiju sa servera (i dosadašnje pokušaje, ako postoje)
   useEffect(() => {
     const controller = new AbortController()
 
     getWordGameToday(controller.signal)
       .then((today) => {
-        const saved = loadWordGame(today.date)
-        setDate(today.date)
-        setGuesses(saved.guesses)
-        setAnswer(saved.answer)
+        setGame(today.game)
         setLoadState('ready')
       })
       .catch(() => {
@@ -42,18 +34,13 @@ function WordGame() {
     return () => controller.abort()
   }, [loadAttempt])
 
-  // 2. Pošalji pokušaj serveru i sačekaj boje
+  // 2. Pošalji pokušaj. Server vraća celo novo stanje partije.
   async function submitGuess() {
     setIsSubmitting(true)
 
     try {
-      const result = await submitWordGuess(currentGuess, guesses.length + 1)
-      const newGuesses = [...guesses, { word: currentGuess, statuses: result.statuses }]
-
-      setGuesses(newGuesses)
-      setAnswer(result.answer)
+      setGame(await submitWordGuess(currentGuess))
       setCurrentGuess('')
-      saveWordGame(date, { guesses: newGuesses, answer: result.answer })
     } catch (error) {
       setMessage(getErrorMessage(error)) // npr. "Ova reč nije u rečniku."
     } finally {
@@ -122,20 +109,25 @@ function WordGame() {
 
   return (
     <div className="word-game-play">
-      <WordBoard guesses={guesses} currentGuess={currentGuess} />
+      <WordBoard guesses={game.guesses} currentGuess={currentGuess} />
 
       <div className="word-game-status" role="status" aria-live="polite">
-        {isWon && <p>Bravo! Reč je pogođena iz {guesses.length}. pokušaja. Nova reč stiže sutra.</p>}
-        {isLost && (
+        {game.status === 'won' && (
           <p>
-            Nema više pokušaja. Tražena reč je bila <strong>{answer}</strong>. Nova reč stiže sutra.
+            Bravo! Reč je pogođena iz {game.guesses.length}. pokušaja. Osvojeno poena: <strong>{game.score}</strong>.
           </p>
         )}
+        {game.status === 'lost' && (
+          <p>
+            Nema više pokušaja. Tražena reč je bila <strong>{game.answer}</strong>. Osvojeno poena: 0.
+          </p>
+        )}
+        {isGameOver && <p className="word-game-next">Nova reč stiže sutra.</p>}
         {!isGameOver && isSubmitting && <p>Proveravamo…</p>}
         {!isGameOver && !isSubmitting && message && <p>{message}</p>}
       </div>
 
-      <WordKeyboard keyStatuses={getKeyStatuses(guesses)} onKey={handleKey} />
+      <WordKeyboard keyStatuses={getKeyStatuses(game.guesses)} onKey={handleKey} />
     </div>
   )
 }

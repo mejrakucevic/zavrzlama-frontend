@@ -19,13 +19,18 @@ function GameCard({ game, number }: GameCardProps) {
         <h2>{game.title}</h2>
         <p className="game-description">{game.description}</p>
         <div className="game-card-footer">
-          <span className="coming-soon">U pripremi</span>
           {game.previewPath ? (
-            <Link to={game.previewPath} className="text-link">
-              Pogledaj tablu <span aria-hidden="true">↗</span>
-            </Link>
+            <>
+              <span className="coming-soon">Igraj danas</span>
+              <Link to={game.previewPath} className="text-link">
+                Igraj <span aria-hidden="true">↗</span>
+              </Link>
+            </>
           ) : (
-            <span aria-hidden="true">✳</span>
+            <>
+              <span className="coming-soon">U pripremi</span>
+              <span aria-hidden="true">✳</span>
+            </>
           )}
         </div>
       </div>
