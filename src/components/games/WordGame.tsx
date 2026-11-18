@@ -1,4 +1,5 @@
 import { useEffect, useEffectEvent, useState } from 'react'
+import { Link } from 'react-router'
 import { getErrorMessage, getWordGameToday, submitWordGuess, type WordGameState } from '../../services/api'
 import WordBoard from './WordBoard'
 import WordKeyboard from './WordKeyboard'
@@ -122,7 +123,14 @@ function WordGame() {
             Nema više pokušaja. Tražena reč je bila <strong>{game.answer}</strong>. Osvojeno poena: 0.
           </p>
         )}
-        {isGameOver && <p className="word-game-next">Nova reč stiže sutra.</p>}
+        {isGameOver && (
+          <p className="word-game-next">
+            Nova reč stiže sutra.{' '}
+            <Link to="/rang-lista?period=day&game=pogodi-rec" className="text-link">
+              Pogledaj današnju rang listu <span aria-hidden="true">↗</span>
+            </Link>
+          </p>
+        )}
         {!isGameOver && isSubmitting && <p>Proveravamo…</p>}
         {!isGameOver && !isSubmitting && message && <p>{message}</p>}
       </div>

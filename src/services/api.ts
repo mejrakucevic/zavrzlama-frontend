@@ -56,6 +56,31 @@ export async function getCurrentUser(): Promise<User | null> {
   }
 }
 
+// ----- Rang lista -----
+
+export type LeaderboardPeriod = 'day' | 'week' | 'all'
+
+export interface LeaderboardEntry {
+  rank: number
+  userId: string
+  username: string
+  totalScore: number
+  gamesPlayed: number
+}
+
+export interface Leaderboard {
+  period: LeaderboardPeriod
+  game: string
+  entries: LeaderboardEntry[]
+  // Mesto prijavljenog korisnika; null ako nije prijavljen ili nema rezultata u tom periodu
+  me: { rank: number; totalScore: number; gamesPlayed: number } | null
+}
+
+export async function getLeaderboard(period: LeaderboardPeriod, game: string, signal?: AbortSignal) {
+  const { data } = await api.get<Leaderboard>('/leaderboard', { params: { period, game }, signal })
+  return data
+}
+
 // ----- Igra "Pogodi reč" -----
 
 // Stanje današnje partije, onako kako ga čuva server

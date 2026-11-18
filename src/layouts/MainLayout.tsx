@@ -21,6 +21,9 @@ function MainLayout() {
             <NavLink to="/games">
               Igre
             </NavLink>
+            <NavLink to="/rang-lista">
+              Rang lista
+            </NavLink>
 
             {/* Dok proveravamo prijavu ne prikazujemo ništa, da dugmad ne "trepnu" */}
             {!isLoading && (user ? (
