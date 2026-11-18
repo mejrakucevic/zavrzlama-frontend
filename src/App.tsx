@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage'
 import LeaderboardPage from './pages/LeaderboardPage'
 import LoginPage from './pages/LoginPage'
 import NotFoundPage from './pages/NotFoundPage'
+import RedjeGamePage from './pages/RedjeGamePage'
 import RegisterPage from './pages/RegisterPage'
 import WordGamePage from './pages/WordGamePage'
 
@@ -15,6 +16,7 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path="games" element={<GamesPage />} />
         <Route path="games/pogodi-rec" element={<WordGamePage />} />
+        <Route path="games/redje" element={<RedjeGamePage />} />
         <Route path="rang-lista" element={<LeaderboardPage />} />
         <Route path="prijava" element={<LoginPage />} />
         <Route path="registracija" element={<RegisterPage />} />

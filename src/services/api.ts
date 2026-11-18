@@ -81,6 +81,51 @@ export async function getLeaderboard(period: LeaderboardPeriod, game: string, si
   return data
 }
 
+// ----- Igra REĐE! -----
+
+export interface RedjeAnswer {
+  prompt: string
+  input: string
+  matched: string | null // prepoznat tačan odgovor, null = netačno
+  points: number
+  share: number | null // udeo igrača sa istim odgovorom (0–1)
+  timedOut: boolean
+}
+
+export interface RedjeGameState {
+  status: 'playing' | 'finished'
+  score: number
+  answers: RedjeAnswer[]
+  current: { index: number; prompt: string; remainingMs: number } | null
+}
+
+export interface RedjeToday {
+  date: string
+  questionCount: number
+  timeLimitMs: number
+  game: RedjeGameState
+}
+
+export interface RedjeResult extends Omit<RedjeAnswer, 'prompt'> {
+  topAnswers: { text: string; share: number }[]
+}
+
+export async function getRedjeToday(signal?: AbortSignal): Promise<RedjeToday> {
+  const { data } = await api.get<RedjeToday>('/games/redje/today', { signal })
+  return data
+}
+
+// Otvori sledeće pitanje (server pokreće tajmer)
+export async function startNextRedjeQuestion(): Promise<RedjeGameState> {
+  const { data } = await api.post<{ game: RedjeGameState }>('/games/redje/next')
+  return data.game
+}
+
+export async function submitRedjeAnswer(answer: string) {
+  const { data } = await api.post<{ result: RedjeResult; game: RedjeGameState }>('/games/redje/answer', { answer })
+  return data
+}
+
 // ----- Igra "Pogodi reč" -----
 
 // Stanje današnje partije, onako kako ga čuva server

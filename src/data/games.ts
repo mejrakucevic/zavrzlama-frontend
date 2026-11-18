@@ -10,6 +10,15 @@ export interface Game {
 
 export const games: Game[] = [
   {
+    id: 'redje',
+    previewPath: '/games/redje',
+    category: 'Retki odgovori',
+    tone: 'lilac',
+    mark: '1%',
+    title: 'REĐE!',
+    description: 'Pet pitanja, 20 sekundi po pitanju. Što ređi tačan odgovor, to više poena.',
+  },
+  {
     id: 'longest-word',
     category: 'Složi slova',
     tone: 'coral',
