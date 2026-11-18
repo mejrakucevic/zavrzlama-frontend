@@ -13,6 +13,7 @@ const PERIODS: { id: LeaderboardPeriod; label: string }[] = [
 const GAMES = [
   { id: 'all', label: 'Sve igre' },
   { id: 'pogodi-rec', label: 'Pogodi reč' },
+  { id: 'redje', label: 'REĐE!' },
 ]
 
 // Rezultat jednog zahteva, zajedno sa "ključem" zahteva na koji se odnosi

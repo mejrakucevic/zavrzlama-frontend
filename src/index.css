@@ -60,6 +60,32 @@
   .header-inner { flex-wrap: wrap; justify-content: center; padding-block: 16px; }
   .main-nav { flex-wrap: wrap; justify-content: center; gap: 18px; }
 }
+.redje-page { max-width: 600px; margin-inline: auto; padding-top: 40px; text-align: center; }
+.redje-page .word-game-header h1 { letter-spacing: 0; }
+.redje-message { padding: 24px 0; color: #515247; }
+.redje-card { display: grid; justify-items: center; gap: 18px; padding: 32px 28px; border: 1px solid var(--color-ink); background: #fffaf0; box-shadow: 6px 6px 0 #c1aed2; }
+.redje-prompt { margin: 0; font: normal clamp(26px, 4vw, 34px)/1.2 var(--font-display); }
+.redje-timer { width: 100%; height: 10px; border: 1px solid var(--color-ink); background: var(--color-paper); }
+.redje-timer span { display: block; height: 100%; background: var(--color-sage); transition: width 200ms linear; }
+.redje-timer span[data-low] { background: var(--color-coral); }
+.redje-seconds { margin: -10px 0 0; font: bold 12px/1 monospace; }
+.redje-form { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; width: 100%; }
+.redje-form input { flex: 1 1 220px; padding: 13px 14px; border: 1px solid var(--color-ink); background: #fff; font: inherit; font-size: 18px; }
+.redje-form input:focus { outline: 3px solid var(--color-cobalt); outline-offset: 2px; }
+.redje-verdict { margin: 0; padding: 12px 16px; width: 100%; border-left: 4px solid var(--color-sage); background: #e8efe5; text-align: left; line-height: 1.6; }
+.redje-verdict[data-kind="miss"] { border-left-color: var(--color-coral); background: #fbe4dd; }
+.redje-points { float: right; font: bold 22px/1.2 var(--font-display); }
+.redje-top { width: 100%; text-align: left; }
+.redje-top ol { margin: 8px 0 0; padding: 0; list-style: none; }
+.redje-top li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #292b2326; }
+.redje-total { margin: 0; font: bold 64px/1 var(--font-display); }
+.redje-total small { font-size: 22px; color: #626256; }
+.redje-summary { width: 100%; margin: 0; padding: 0; list-style: none; text-align: left; }
+.redje-summary li { display: grid; grid-template-columns: 1fr auto 48px; gap: 12px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid #292b2326; font-size: 14px; }
+.redje-summary strong { text-align: right; }
+.redje-summary-prompt { color: #515247; }
+.redje-rules { margin: 0; padding-left: 20px; text-align: left; line-height: 1.8; }
+.redje-next { margin: 0; color: #515247; }
 .leaderboard-page { max-width: 760px; margin-inline: auto; }
 .leaderboard-page .page-intro { padding-top: 48px; }
 .leaderboard-filters { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; margin: 8px 0 24px; }
